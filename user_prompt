@@ -1,0 +1,32 @@
+## 사용자 기본 정보
+- GitHub ID: {githubLogin}
+- 이름: {request.name}
+- 자기소개: {request.description}
+- 관련 분야: {request.jobCategory}
+- 주소: {request.address}                    ← 비어있으면 이 줄 자체가 생략됨
+- 연락처: {contact를 "라벨 값 / 라벨 값" 형태로}
+- 프로필/대표 이미지 URL 목록: {portfolioImageKeys → URL 배열}
+- 수상이력:
+  - {date} / {title} / {description} ({organization})
+  - ... (없으면 "없음")
+- 활동이력:
+  - {period} {organization} — {title}, {description}
+  - ... (없으면 "없음")
+
+## 전체 요구사항 (디자인/톤 등)         ← customPrompt가 있을 때만 이 블록 자체가 붙음
+{request.customPrompt}
+
+## 프로젝트 목록 ({N}개)
+
+### 프로젝트 1: {project.name}
+- GitHub 레포지토리(owner/repo): {owner}/{repo}  ← 레포지토리 조회 성공 시에만 이 줄이 붙음
+- 강조하고 싶은 내용: {project.description}
+- 이미지 URL 목록: [{imageKeys → URL, ...}]
+- 추가 첨부 파일: [{fileKeys → presigned URL, ...}]  또는 없으면 null
+
+(프로젝트 개수만큼 반복)
+
+---
+각 프로젝트의 레포지토리에 대해 제공된 도구(getMyCommitMessages, getMyPullRequests, getReadme,
+listSourceFiles, readSourceFile)를 호출해
+실제 커밋·PR·README·소스 파일을 확인한 뒤, System Prompt의 규칙에 따라 단일 포트폴리오 HTML을 생성하라.
